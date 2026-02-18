@@ -1,15 +1,17 @@
 {% include "_header.html" %}
     
+    <form>
+        <input name="user_name" type="text" placeholder="name">
+        <input name="user_last_name" type="text" placeholder="last name">
+        <button>
+            Create user
+        </button>
+    </form>
+
+
     <div id="users">
     {% for user in users %}
-        <div id="user-{{ user.user_pk }}" class="user">
-            <div>{{ user.user_pk }}</div>
-            <div>{{ user.user_name }}</div>
-            <div>{{ user.user_last_name }}</div>
-            <button mix-delete="/users/{{ user.user_pk }}">
-                Delete
-            </button>
-        </div>
+        {% include "___user.html" %}
     {% endfor %}
     </div>
 

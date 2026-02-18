@@ -77,6 +77,7 @@ def get_item_by_id(id):
         if "db" in locals(): db.close()
 
 
+
 ##############################
 @app.post("/users")
 def create_user():
@@ -99,6 +100,30 @@ def create_user():
         if "cursor" in locals(): cursor.close()
         if "db" in locals(): db.close()
 
+
+##############################
+"""
+@app.post("/users")
+def create_user():
+    try:
+        # TODO: Validate user_name
+        # TODO: Validate user_last_name
+
+        user_pk = uuid.uuid4().hex
+        user_name = request.form.get("user_name")
+        user_last_name = request.form.get("user_last_name")
+
+        db, cursor = x.db()
+        q = "INSERT INTO users VALUES(%s, %s, %s)"
+        cursor.execute(q, (user_pk, user_name, user_last_name))
+        db.commit()
+        return jsonify({"id":user_pk}), 201
+    except Exception as ex:
+        pass
+    finally:
+        if "cursor" in locals(): cursor.close()
+        if "db" in locals(): db.close()
+"""
 
 ##############################
 @app.delete("/users/<user_pk>")
