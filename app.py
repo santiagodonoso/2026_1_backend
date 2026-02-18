@@ -79,6 +79,45 @@ def get_item_by_id(id):
 
 
 ##############################
+@app.get("/user/<user_pk>")
+def get_user_by_id(user_pk):
+    try:
+        # Best case scenario
+        # TODO: Validate the id
+        # Connect to the database
+        db, cursor = x.db()
+        # Create a query
+        q = "SELECT * FROM users WHERE user_pk = %s"
+        # Execute the query. The second argument is a tuple
+        # If the tuple only has 1 argument, then a comma after the argument
+        cursor.execute(q, (user_pk,))
+        user = cursor.fetchone()
+        user_more_html = render_template("___user_more.html", user=user)
+        return f"""
+            <browser mix-update="#right">
+            {user_more_html}
+            </browser>
+        """
+    except Exception as ex:
+        # Worst case scenario
+        print(ex, flush=True)
+        return "ups ...", 500
+    finally:
+        # Runs after the try or after the except
+        # In other words, it always runs
+        if "cursor" in locals(): cursor.close()
+        if "db" in locals(): db.close()
+
+
+
+
+
+
+
+
+
+
+##############################
 @app.post("/users")
 def create_user():
     try:

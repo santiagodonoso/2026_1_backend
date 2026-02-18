@@ -1,21 +1,29 @@
 {% include "_header.html" %}
     
-    <form mix-post="/users">
-        <input name="user_name" type="text" placeholder="name">
-        <input name="user_last_name" type="text" placeholder="last name">
-        <button>
-            Create user
-        </button>
-    </form>
+<main id="items">
 
-
-    <div id="users">
+    <section id="left">
+        <form mix-post="/users">
+            <input name="user_name" type="text" placeholder="name">
+            <input name="user_last_name" type="text" placeholder="last name">
+            <button>
+                Create user
+            </button>
+        </form>
+        <div id="users">
+            
+        {% for user in users %}
+            {% include "___user.html" %}
+        {% endfor %}
         
-    {% for user in users %}
-        {% include "___user.html" %}
-    {% endfor %}
-    
-    </div>
+        </div>
+    </section>
+
+    <section id="right">
+        
+    </section>
+
+</main>
 
 
 {% include "_footer.html" %}
