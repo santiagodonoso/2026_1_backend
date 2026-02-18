@@ -1,0 +1,40 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: 2026_1_backend_flask
+    depends_on:
+      - mariadb
+    ports:
+      - 80:80 # 0 - 1024 reserved. Use any port from 1025 to 65535
+    volumes:
+      - .:/app
+
+  mariadb:
+    image: mariadb:10.6.20
+    container_name: 2026_1_backend_mariadb
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: 2026_1_backend
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    ports:
+      - 3306:3306
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: 2026_1_backend_phpmyadmin
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - 8080:80
+
+volumes:
+  mariadb_data:
+
+
+
