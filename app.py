@@ -5,8 +5,36 @@ app = Flask(__name__)
 
 
 
+##############################
+@app.get("/")
+def show_index():
+    try:
+        return render_template("page_index.html")
+    except Exception as ex:
+        return "system under maintenance ...", 500
 
 ##############################
+@app.get("/items")
+def show_items():
+    try:
+        db, cursor = x.db()
+        q = "SELECT * FROM users"
+        cursor.execute(q)
+        users = cursor.fetchall()
+        return render_template("items.html", users=users)
+    except Exception as ex:
+        print(ex, flush = True)
+        return "system under maintenance ...", 500
+    finally:
+        if "cursor" in locals(): cursor.close()
+        if "db" in locals(): db.close()
+
+
+
+
+
+##############################
+"""
 @app.get("/items")
 def get_all_items():
     try:
@@ -21,7 +49,7 @@ def get_all_items():
     finally:
         if "cursor" in locals(): cursor.close()
         if "db" in locals(): db.close()
-
+"""
 
 ##############################
 @app.get("/items/<id>")
@@ -81,7 +109,11 @@ def delete_user(user_pk):
         q = "DELETE FROM users WHERE user_pk = %s"
         cursor.execute(q, (user_pk,))
         db.commit()
-        return "", 204
+        return f"""
+            <browser mix-remove="#user-{user_pk}" mix-fade-2000>
+            </browser>
+        """
+        #return "", 204
     except Exception as ex:
         pass
     finally:

@@ -18,6 +18,13 @@ nav{
         color: white;
     }
 }
+
+.user{
+    padding: 1rem;
+}
+
+
+
 footer{
     position: fixed;
     bottom: 0;
