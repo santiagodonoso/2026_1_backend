@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mariadb
--- Generation Time: Feb 12, 2026 at 10:56 AM
+-- Generation Time: Feb 18, 2026 at 08:33 AM
 -- Server version: 10.6.20-MariaDB-ubu2004
 -- PHP Version: 8.3.26
 
@@ -38,7 +38,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_pk`, `user_name`, `user_last_name`) VALUES
-('1', 'X', 'Xx');
+('1', 'Santiago', 'Donoso');
 
 --
 -- Indexes for dumped tables

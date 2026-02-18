@@ -158,13 +158,13 @@
 					"mode": "formdata",
 					"formdata": [
 						{
-							"key": "title",
-							"value": "New title",
+							"key": "user_name",
+							"value": "    Santi    ",
 							"type": "text"
 						},
 						{
-							"key": "price",
-							"value": "20",
+							"key": "user_last_name",
+							"value": "     Donoso     ",
 							"type": "text"
 						}
 					]
