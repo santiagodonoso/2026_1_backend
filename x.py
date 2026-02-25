@@ -40,8 +40,16 @@ def validate_user_last_name():
     return user_last_name
 
 
-
-
+##############################
+USER_USERNAME_MIN = 2
+USER_USERNAME_MAX = 20
+def validate_user_username():
+    user_username = request.form.get("user_username", "").strip()
+    if len(user_username) < USER_USERNAME_MIN:
+        raise Exception(f"Username minimum {USER_USERNAME_MIN } characters", 400)
+    if len(user_username) > USER_USERNAME_MAX:
+        raise Exception(f"Username maximum {USER_USERNAME_MAX } characters", 400)    
+    return user_username
 
 
 
