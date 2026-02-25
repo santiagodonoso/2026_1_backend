@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, jsonify
 import x
 import uuid
+
+from icecream import ic
+ic.configureOutput(prefix=f'----- | ', includeContext=True)
+
 app = Flask(__name__)
 
 ##############################
@@ -78,13 +82,15 @@ def check_username():
 
 
     except Exception as ex:
-        print(ex, flush = True)
+        # print(ex, flush = True)
+        ic(ex)
 
-        return f"""
-            <browser mix-update="span">
-                {ex.args[0]}
-            </browser>
-        """
+        if "--error-- user_username" in str(ex):
+            return f"""<browser mix-update="span">{ex.args[0]}</browser>"""
+
+        # Worst case, something unexpected
+        return f"""<browser mix-update="span">{str(ex)}</browser>"""
+
     finally:
         if "cursor" in locals(): cursor.close()
         if "db" in locals(): db.close()  

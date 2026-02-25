@@ -1,5 +1,6 @@
 from flask import request
 import mysql.connector
+import re
 
 ##############################
 def db():
@@ -20,12 +21,12 @@ def db():
 ##############################
 USER_FIRST_NAME_MIN = 2
 USER_FIRST_NAME_MAX = 20
+USER_FIRST_NAME_REGEX = f"^.{{{USER_FIRST_NAME_MIN},{USER_FIRST_NAME_MAX}}}$"
 def validate_user_first_name():
-    user_first_name = request.form.get("user_first_name", "").strip()
-    if len(user_first_name) < USER_FIRST_NAME_MIN:
-        raise Exception(f"User first name minimum {USER_FIRST_NAME_MIN } characters", 400)
-    if len(user_first_name) > USER_FIRST_NAME_MAX:
-        raise Exception(f"User first name maximum {USER_FIRST_NAME_MAX } characters", 400)    
+    user_first_name = request.form.get("user_first_name", "").strip()  
+    if not re.match(USER_FIRST_NAME_REGEX, user_first_name):
+        raise Exception(f"--error-- user_first_name")    
+
     return user_first_name
 
 ##############################
@@ -43,12 +44,11 @@ def validate_user_last_name():
 ##############################
 USER_USERNAME_MIN = 2
 USER_USERNAME_MAX = 20
+USER_USERNAME_REGEX = f"^.{{{USER_USERNAME_MIN},{USER_USERNAME_MAX}}}$"
 def validate_user_username():
     user_username = request.form.get("user_username", "").strip()
-    if len(user_username) < USER_USERNAME_MIN:
-        raise Exception(f"Username minimum {USER_USERNAME_MIN } characters", 400)
-    if len(user_username) > USER_USERNAME_MAX:
-        raise Exception(f"Username maximum {USER_USERNAME_MAX } characters", 400)    
+    if not re.match(USER_USERNAME_REGEX, user_username):
+        raise Exception("--error-- user_username")
     return user_username
 
 
