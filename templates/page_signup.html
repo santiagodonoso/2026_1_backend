@@ -11,6 +11,12 @@
 </head>
 <body>
 
+    <h1>
+        {{ x.USER_USERNAME_MIN }}
+    </h1>
+    <h1>
+         {{ x.USER_USERNAME_MAX }}
+    </h1>
 
     <form>
         <label for="">Username</label>
@@ -18,8 +24,9 @@
                 mix-post="/check-username"
                 mix-input
                 mix-delay="1000"
+                mix-validate="^.{2,20}$"
                 >
-        <span>xxxxxxx</span>
+        <span></span>
     </form>
 
 

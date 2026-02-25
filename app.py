@@ -49,8 +49,8 @@ def signup():
 @app.get("/signup")
 def show_signup():
     try:
-        return render_template("page_signup.html")
-    except Execption as ex:
+        return render_template("page_signup.html", x=x)
+    except Exception as ex:
         print(ex, flush = True)
         return "ups ..."
 
