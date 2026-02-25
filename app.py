@@ -58,10 +58,33 @@ def show_signup():
 @app.post("/check-username")
 def check_username():
     try:
-        return "ok"
+        user_username = x.validate_user_username()
+        db, cursor = x.db()
+        q = "SELECT * FROM users WHERE user_username = %s"
+        cursor.execute(q, (user_username,))
+        row = cursor.fetchone()
+        if not row:
+            return f"""
+                <browser mix-update="span">
+                    Username available
+                </browser>
+            """
+        
+        return f"""
+            <browser mix-update="span">
+                Username taken
+            </browser>
+        """        
+
+
     except Exception as ex:
         print(ex, flush = True)
-        return "error"
+
+        return f"""
+            <browser mix-update="span">
+                {ex.args[0]}
+            </browser>
+        """
     finally:
         if "cursor" in locals(): cursor.close()
         if "db" in locals(): db.close()  
