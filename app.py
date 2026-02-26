@@ -112,8 +112,10 @@ def create_user():
         cursor.execute(q, (user_pk, user_username, user_first_name, user_create_at))
         db.commit()
 
-        return """
-        <browser mix-update="span">User created</browser>
+        tip = render_template("___tip.html", message="User created", status="ok")
+
+        return f"""
+        <browser mix-update="#tooltip">{tip}</browser>
         """
         
     

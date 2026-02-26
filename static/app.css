@@ -14,6 +14,16 @@ body{
     width: 100%;
     display: flex;
     justify-content: center;
+    span{
+        padding: 1rem 2rem;
+        color: white;
+    }
+    .ok{
+        background: green;
+    }
+    .error{
+        background: red;
+    }    
 }
 
 
