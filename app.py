@@ -128,6 +128,9 @@ def create_user():
         if "--error-- user_first_name" in str(ex):
             return f"""<browser mix-update="span">{ex.args[0]}</browser>""", 400
 
+        if "Duplicate entry" in str(ex) and "user_username" in str(ex):
+            return f"""<browser mix-update="span">Username taken</browser>""", 400
+
         # Worst case, something unexpected
         return f"""<browser mix-update="span">System under maintenance</browser>""", 500
 
