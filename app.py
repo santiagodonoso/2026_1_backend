@@ -1,11 +1,13 @@
 from flask import Flask, render_template, request, jsonify
 import x
 import uuid
+import time
 
 from icecream import ic
 ic.configureOutput(prefix=f'----- | ', includeContext=True)
 
 app = Flask(__name__)
+
 
 ##############################
 @app.post("/signup")
@@ -59,7 +61,7 @@ def show_signup():
         return "ups ..."
 
 ##############################
-@app.post("/check-username")
+@app.post("/api-check-username")
 def check_username():
     try:
         user_username = x.validate_user_username()
@@ -86,10 +88,10 @@ def check_username():
         ic(ex)
 
         if "--error-- user_username" in str(ex):
-            return f"""<browser mix-update="span">{ex.args[0]}</browser>"""
+            return f"""<browser mix-update="span">{ex.args[0]}</browser>""", 400
 
         # Worst case, something unexpected
-        return f"""<browser mix-update="span">{str(ex)}</browser>"""
+        return f"""<browser mix-update="span">System under maintenance</browser>""", 500
 
     finally:
         if "cursor" in locals(): cursor.close()
@@ -97,4 +99,38 @@ def check_username():
 
 
 
+##############################
+@app.post("/api-create-user")
+def create_user():
+    try:
+        user_username = x.validate_user_username()
+        user_first_name = x.validate_user_first_name()
+        user_pk = uuid.uuid4().hex
+        user_create_at = int(time.time())
+        db, cursor = x.db()
+        q = "INSERT INTO users VALUES(%s, %s, %s, %s)"
+        cursor.execute(q, (user_pk, user_username, user_first_name, user_create_at))
+        db.commit()
 
+        return """
+        <browser mix-update="span">User created</browser>
+        """
+        
+    
+
+    except Exception as ex:
+        # print(ex, flush = True)
+        ic(ex)
+
+        if "--error-- user_username" in str(ex):
+            return f"""<browser mix-update="span">{ex.args[0]}</browser>""", 400
+
+        if "--error-- user_first_name" in str(ex):
+            return f"""<browser mix-update="span">{ex.args[0]}</browser>""", 400
+
+        # Worst case, something unexpected
+        return f"""<browser mix-update="span">System under maintenance</browser>""", 500
+
+    finally:
+        if "cursor" in locals(): cursor.close()
+        if "db" in locals(): db.close()  

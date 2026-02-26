@@ -1,6 +1,6 @@
 from flask import request
 import mysql.connector
-import re
+import re # Regular expressions also called Regex
 
 ##############################
 def db():

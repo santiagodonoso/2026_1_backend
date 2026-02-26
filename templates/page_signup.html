@@ -11,21 +11,26 @@
 </head>
 <body>
 
-    <h1>
-        {{ x.USER_USERNAME_MIN }}
-    </h1>
-    <h1>
-         {{ x.USER_USERNAME_MAX }}
-    </h1>
+    <form mix-post="/api-create-user">
 
-    <form>
         <label for="">Username</label>
         <input  name="user_username" type="text" 
-                mix-post="/check-username"
+                mix-post="/api-check-username"
                 mix-input
-                mix-delay="1000"                
-                >
+                mix-delay="1000"
+                mix-validate="{{ x.USER_USERNAME_REGEX }}"           
+        >
         <span></span>
+
+        <label for="">First name</label>
+        <input  name="user_first_name" type="text" 
+            mix-validate="{{ x.USER_FIRST_NAME_REGEX }}"
+        >
+
+        <button>
+            Create user
+        </button>
+       
     </form>
 
 
