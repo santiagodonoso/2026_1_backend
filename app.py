@@ -128,7 +128,8 @@ def create_user():
             return f"""<browser mix-update="span">{ex.args[0]}</browser>""", 400
 
         if "--error-- user_first_name" in str(ex):
-            return f"""<browser mix-update="span">{ex.args[0]}</browser>""", 400
+            tip = render_template("___tip.html", message="Invalid first name", status="error")
+            return f"""<browser mix-update="#tooltip">{tip}</browser>""", 400
 
         if "Duplicate entry" in str(ex) and "user_username" in str(ex):
             return f"""<browser mix-update="span">Username taken</browser>""", 400
